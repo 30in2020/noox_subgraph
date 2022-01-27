@@ -1,0 +1,8 @@
+type ElementCount @entity {
+  id: ID!
+  type: Int!
+  from: String!
+  to: String!
+  name: String!
+  count: BigInt!
+}

@@ -1,0 +1,189 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: uniswap_v1_factory
+    network: mainnet
+    source:
+      address: '0xc0a47dFe034B400B47bDaD5FecDa2621de6c4d95'
+      abi: abi_uniswap_v1_factory
+      startBlock: 6627917
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mapping/uniswap_v1/factory.ts
+      entities:
+        - ElementCount
+      abis:
+        - name: abi_uniswap_v1_factory
+          file: ./abis/uniswap_v1/factory.json
+      eventHandlers:
+        - event: NewExchange(indexed address,indexed address)
+          handler: E_handleNewExchange
+  - kind: ethereum/contract
+    name: uniswap_v2_factory
+    network: mainnet
+    source:
+      address: '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f'
+      abi: abi_uniswap_v2_factory
+      startBlock: 10000834
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mapping/uniswap_v2/factory.ts
+      entities:
+        - ElementCount
+      abis:
+        - name: abi_uniswap_v2_factory
+          file: ./abis/uniswap_v2/factory.json
+      eventHandlers:
+        - event: PairCreated(indexed address,indexed address,address,uint256)
+          handler: E_handlePairCreated
+  - kind: ethereum/contract
+    name: uniswap_v3_factory
+    network: mainnet
+    source:
+      address: '0x1F98431c8aD98523631AE4a59f267346ea31F984'
+      abi: abi_uniswap_v3_factory
+      startBlock: 12369621
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mapping/uniswap_v3/factory.ts
+      entities:
+        - ElementCount
+      abis:
+        - name: abi_uniswap_v3_factory
+          file: ./abis/uniswap_v3/factory.json
+      eventHandlers:
+        - event: FeeAmountEnabled(indexed uint24,indexed int24)
+          handler: E_handleFeeAmountEnabled
+        - event: OwnerChanged(indexed address,indexed address)
+          handler: E_handleOwnerChanged
+        - event: PoolCreated(indexed address,indexed address,indexed uint24,int24,address)
+          handler: E_handlePoolCreated
+  - kind: ethereum/contract
+    name: uniswap_v3_nf_position_manager
+    network: mainnet
+    source:
+      address: '0xC36442b4a4522E871399CD717aBDD847Ab11FE88'
+      abi: abi_uniswap_v3_nf_position_manager
+      startBlock: 12369651
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mapping/uniswap_v3/nf_position_manager.ts
+      entities:
+        - ElementCount
+      abis:
+        - name: abi_uniswap_v3_nf_position_manager
+          file: ./abis/uniswap_v3/nf_position_manager.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: E_handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: E_handleApprovalForAll
+        - event: Collect(indexed uint256,address,uint256,uint256)
+          handler: E_handleCollect
+        - event: DecreaseLiquidity(indexed uint256,uint128,uint256,uint256)
+          handler: E_handleDecreaseLiquidity
+        - event: IncreaseLiquidity(indexed uint256,uint128,uint256,uint256)
+          handler: E_handleIncreaseLiquidity
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: E_handleTransfer
+templates:
+  - kind: ethereum/contract
+    name: t_uniswap_v1_exchange
+    network: mainnet
+    source:
+      abi: abi_uniswap_v1_exchange
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mapping/uniswap_v1/exchange.ts
+      entities:
+        - ElementCount
+      abis:
+        - name: abi_uniswap_v1_exchange
+          file: ./abis/uniswap_v1/exchange.json
+      eventHandlers:
+        - event: AddLiquidity(indexed address,indexed uint256,indexed uint256)
+          handler: E_handleAddLiquidity
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: E_handleApproval
+        - event: EthPurchase(indexed address,indexed uint256,indexed uint256)
+          handler: E_handleEthPurchase
+        - event: RemoveLiquidity(indexed address,indexed uint256,indexed uint256)
+          handler: E_handleRemoveLiquidity
+        - event: TokenPurchase(indexed address,indexed uint256,indexed uint256)
+          handler: E_handleTokenPurchase
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: E_handleTransfer
+  - kind: ethereum/contract
+    name: t_uniswap_v2_pair
+    network: mainnet
+    source:
+      abi: abi_uniswap_v2_pair
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mapping/uniswap_v2/pair.ts
+      entities:
+        - ElementCount
+      abis:
+        - name: abi_uniswap_v2_pair
+          file: ./abis/uniswap_v2/pair.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: E_handleAddress
+        - event: Burn(indexed address,uint256,uint256,indexed address)
+          handler: E_handleBurn
+        - event: Mint(indexed address,uint256,uint256)
+          handler: E_handleMint
+        - event: Swap(indexed address,uint256,uint256,uint256,uint256,indexed address)
+          handler: E_handleSwap
+        - event: Sync(uint112,uint112)
+          handler: E_handleSync
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: E_handleTransfer
+  - kind: ethereum/contract
+    name: t_uniswap_v3_pool
+    network: mainnet
+    source:
+      abi: abi_uniswap_v3_pool
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mapping/uniswap_v3/pool.ts
+      entities:
+        - ElementCount
+      abis:
+        - name: abi_uniswap_v3_pool
+          file: ./abis/uniswap_v3/pool.json
+      eventHandlers:
+        - event: Burn(indexed address,indexed int24,indexed int24,uint128,uint256,uint256)
+          handler: E_handleBurn
+        - event: Collect(indexed address,address,indexed int24,indexed int24,uint128,uint128)
+          handler: E_handleCollect
+        - event: CollectProtocol(indexed address,indexed address,uint128,uint128)
+          handler: E_handleCollectProtocol
+        - event: Flash(indexed address,indexed address,uint256,uint256,uint256,uint256)
+          handler: E_handleFlash
+        - event: IncreaseObservationCardinalityNext(uint16,uint16)
+          handler: E_handleIncreaseObservationCardinalityNext
+        - event: Initialize(uint160,int24)
+          handler: E_handleInitialize
+        - event: Mint(address,indexed address,indexed int24,indexed int24,uint128,uint256,uint256)
+          handler: E_handleMint
+        - event: SetFeeProtocol(uint8,uint8,uint8,uint8)
+          handler: E_handleSetFeeProtocol
+        - event: Swap(indexed address,indexed address,int256,int256,uint160,uint128,int24)
+          handler: E_handleSwap
